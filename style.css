@@ -1,0 +1,15 @@
+body{
+    background-color: bisque;
+}
+
+.table{
+    display: grid;
+    grid-template-rows: 150px 150px 150px;
+    grid-template-columns: 150px 150px 150px;
+    background-color: blue;
+    gap: 20px 20px;
+}
+
+.cell{
+    background-color: aliceblue;
+}
