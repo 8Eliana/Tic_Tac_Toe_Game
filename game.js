@@ -3,6 +3,9 @@ let userActionX = [];
 let userActionO = [];
 let title = document.querySelector("h1");
 let currentPlayer = 'X';
+let flag = false;
+let buttonRestartGame = document.querySelector(".button")
+let gameOver = false;
 
 const winningCombinations = [
     ['item11', 'item22', 'item33'],
@@ -14,14 +17,23 @@ const winningCombinations = [
 
 cellElements.forEach(function (cell) {
     cell.addEventListener("click", function () {
+        //If game is over we can't make click on another cell(chenge the content of the cell)
+        if(gameOver){
+            return;
+        }
+
+        //The id of the cell and the elemet that will be modified
         let element = this.id;
-        console.log(cell);
-        console.log(this.classList);
         let changeCellContent = document.getElementById(element);
+
+        //Check if the cell has the 'used' class for saving the current content of the cell
         if (this.classList.contains('used') && (changeCellContent.innerHTML === 'X' || changeCellContent.innerHTML === 'O')) {
             return;
-        } 
+        }
+        //Changed the content of the current cell
         changeCellContent.innerHTML = `${currentPlayer}`;
+
+        //Check the current player and push he id element on the specific array
         if (currentPlayer === 'X') {
             userActionX.push(element);
         }
@@ -29,25 +41,34 @@ cellElements.forEach(function (cell) {
             userActionO.push(element);
         }
 
-        let flag = checkTheWinner(winningCombinations,userActionX,currentPlayer);
+        //Flag used for restart the game
+        flag = checkTheWinner(winningCombinations, userActionX, currentPlayer);
+
+        //Change the current player
         currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
 
         //I will use this like a flag that doesn't allow users to make click on a cell that has already something inside
         changeCellContent.classList.add('used');
-    })
 
+        if (flag === true) {
+            gameOver = true;
+            buttonRestartGame.addEventListener("click", function () {
+                location.reload();
+            });
+        }
+    })
 })
 
 let count = 0;
 
-function checkTheWinner(array,userAction,currentPlayer) {
+function checkTheWinner(array, userAction, currentPlayer) {
     for (let combination of array) {
         if (combination.every(cell => userAction.includes(cell))) {
             title.innerHTML = currentPlayer + ' is the winner!';
             return true;
         }
     }
-    if (array.length === 9) {
+    if (userActionX.length + userActionO.length === 9) {
         title.innerHTML = 'It\'s a draw!';
     }
     return false;
