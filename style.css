@@ -1,15 +1,38 @@
 body{
-    background-color: bisque;
+    background-color: black;
 }
 
 .table{
     display: grid;
     grid-template-rows: 150px 150px 150px;
     grid-template-columns: 150px 150px 150px;
-    background-color: blue;
-    gap: 20px 20px;
+    background-color: rgb(187, 4, 4);
+    gap: 10px 10px;
+    width: 470px;
+    padding: 10px;
 }
 
 .cell{
-    background-color: aliceblue;
+    background-color: white;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 130px;
+    color: rgb(185, 7, 7);
+}
+
+.content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 90vh;
+}
+
+img{
+    height: 150px;
+    width: 150px;;
+}
+
+h1{
+    color: red;
 }
