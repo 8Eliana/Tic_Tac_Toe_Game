@@ -1,3 +1,4 @@
+//Variables
 let cellElements = document.querySelectorAll(".cell");
 let userActionX = [];
 let userActionO = [];
@@ -7,12 +8,16 @@ let flag = false;
 let buttonRestartGame = document.querySelector(".button")
 let gameOver = false;
 
+//Array of winningCombination
 const winningCombinations = [
     ['item11', 'item22', 'item33'],
     ['item13', 'item22', 'item31'],
     ['item11', 'item21', 'item31'],
     ['item12', 'item22', 'item32'],
-    ['item13', 'item23', 'item33']
+    ['item13', 'item23', 'item33'],
+    ['item11', 'item12', 'item13'],
+    ['item21', 'item22', 'item23'],
+    ['item31', 'item32', 'item33']
 ];
 
 cellElements.forEach(function (cell) {
@@ -42,7 +47,7 @@ cellElements.forEach(function (cell) {
         }
 
         //Flag used for restart the game
-        flag = checkTheWinner(winningCombinations, userActionX, currentPlayer);
+        flag = checkTheWinner(winningCombinations, userActionX,userActionO, currentPlayer);
 
         //Change the current player
         currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
@@ -50,6 +55,7 @@ cellElements.forEach(function (cell) {
         //I will use this like a flag that doesn't allow users to make click on a cell that has already something inside
         changeCellContent.classList.add('used');
 
+        //If we want to restart the game
         if (flag === true) {
             gameOver = true;
             buttonRestartGame.addEventListener("click", function () {
@@ -59,11 +65,13 @@ cellElements.forEach(function (cell) {
     })
 })
 
-let count = 0;
-
-function checkTheWinner(array, userAction, currentPlayer) {
+function checkTheWinner(array, userAction1,userAction2, currentPlayer) {
     for (let combination of array) {
-        if (combination.every(cell => userAction.includes(cell))) {
+        if (combination.every(cell => userAction1.includes(cell))) {
+            title.innerHTML = currentPlayer + ' is the winner!';
+            return true;
+        }
+        if (combination.every(cell => userAction2.includes(cell))) {
             title.innerHTML = currentPlayer + ' is the winner!';
             return true;
         }
